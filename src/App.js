@@ -74,7 +74,7 @@ class App extends Component {
 
   onSubmitButton = () => {
     this.setState({ imageUrl: this.state.input, age: null, gender: null, ethnicity: null });
-    fetch('http://localhost:3000/imageurl', {
+    fetch('https://shanes-facial-recognition-app.herokuapp.com/imageurl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({

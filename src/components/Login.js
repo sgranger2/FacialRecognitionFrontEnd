@@ -18,7 +18,7 @@ class Login extends React.Component {
     if (!this.state.signInEmail || !this.state.signInPassword) {
       alert('Incorrect email or password');
     } else {
-      fetch('http://localhost:3000/login', {
+      fetch('https://shanes-facial-recognition-app.herokuapp.com/login', {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

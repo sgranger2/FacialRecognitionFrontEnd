@@ -23,7 +23,7 @@ class Signup extends React.Component {
         if (!this.state.name || !this.state.email || !this.state.password) {
             alert('Incorrect form submission');
         } else {
-            fetch('http://localhost:3000/signup', {
+            fetch('https://shanes-facial-recognition-app.herokuapp.com/signup', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
