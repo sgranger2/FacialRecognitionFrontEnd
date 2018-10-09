@@ -46,7 +46,6 @@ class App extends Component {
     const image = document.getElementById('inputimage');
     const width = Number(image.width);
     const height = Number(image.height);
-    console.log(width, height);
     return {
       leftCol: facebox.left_col * width,
       topRow: facebox.top_row * height,
