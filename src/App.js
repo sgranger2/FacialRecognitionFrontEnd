@@ -12,11 +12,10 @@ const particlesOptions = require('./particlesjs-config.json');
 const initialState = {
   input: '',
   imageUrl: '',
-  age: null,
-  gender: null,
-  ethnicity: null,
   error: false,
-  box: {},
+  faceData: [],
+  displayDemographics: {},
+  activeFace: 0,
   route: 'login',
   isSignedIn: false,
   user: {
@@ -41,21 +40,37 @@ class App extends Component {
   }
 
 
-  calculateFaceBox = (data) => {
-    const facebox = data.outputs[0].data.regions[0].region_info.bounding_box;
-    const image = document.getElementById('inputimage');
-    const width = Number(image.width);
-    const height = Number(image.height);
-    return {
-      leftCol: facebox.left_col * width,
-      topRow: facebox.top_row * height,
-      rightCol: width - (facebox.right_col * width),
-      bottomRow: height - (facebox.bottom_row * height)
-    }
+  calculateFaceData = (data) => {
+    this.setState({error: false});
+    return data.outputs[0].data.regions.map(face => {
+      let facebox = face.region_info.bounding_box;
+      let image = document.getElementById('inputimage');
+      let width = Number(image.width);
+      let height = Number(image.height);
+      let demographicInfo = face.data.face;
+      return {
+        leftCol: facebox.left_col * width,
+        topRow: facebox.top_row * height,
+        rightCol: width - (facebox.right_col * width),
+        bottomRow: height - (facebox.bottom_row * height),
+        demographics: {
+          age: demographicInfo.age_appearance.concepts[0].name,
+          gender: demographicInfo.gender_appearance.concepts[0].name,
+          ethnicity: demographicInfo.multicultural_appearance.concepts[0].name,
+        }
+      }
+    });
   }
 
-  displayFaceBox = (box) => {
-    this.setState({ box: box });
+  displayFaceData = (faceData) => {
+    const currentFace = this.state.activeFace;
+    this.setState({ 
+      faceData: faceData, 
+      displayDemographics: faceData[currentFace].demographics});
+  }
+
+  selectFace = (index) => {
+    this.setState({displayDemographics: this.state.faceData[index].demographics, activeFace: index})
   }
 
   onRouteChange = (route) => {
@@ -72,7 +87,7 @@ class App extends Component {
   }
 
   onSubmitButton = () => {
-    this.setState({ imageUrl: this.state.input, age: null, gender: null, ethnicity: null });
+    this.setState({ imageUrl: this.state.input, faceData: [], activeFace: 0 });
     fetch('https://shanes-facial-recognition-app.herokuapp.com/imageurl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
@@ -81,19 +96,33 @@ class App extends Component {
         })
       }).then(response => response.json()).then(
       (response) => {
-        this.setState({
-          age: response.outputs[0].data.regions[0].data.face.age_appearance.concepts[0].name,
-          gender: response.outputs[0].data.regions[0].data.face.gender_appearance.concepts[0].name,
-          ethnicity: response.outputs[0].data.regions[0].data.face.multicultural_appearance.concepts[0].name,
-          error: false
-        });
-        this.displayFaceBox(this.calculateFaceBox(response));
+        this.displayFaceData(this.calculateFaceData(response));
       },
-      (err) => {
-        console.log(err);
-        this.setState({ error: true });
-      }
-    )
+    ).catch((err) => {
+      console.log(err);
+      this.setState({ error: true });
+    })
+  }
+
+  onTryItOutButton = () => {
+    this.setState({ 
+      imageUrl: 'https://images.unsplash.com/photo-1512253229843-7da434b94f25?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=637c95db9286b1bf51775a2f5bb28838&auto=format&fit=crop&w=618&q=80',
+      faceData: [],
+      activeFace: 0 });
+    fetch('https://shanes-facial-recognition-app.herokuapp.com/imageurl', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          input: 'https://images.unsplash.com/photo-1512253229843-7da434b94f25?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=637c95db9286b1bf51775a2f5bb28838&auto=format&fit=crop&w=618&q=80'
+        })
+      }).then(response => response.json()).then(
+      (response) => {
+        this.displayFaceData(this.calculateFaceData(response));
+      },
+    ).catch((err) => {
+      console.log(err);
+      this.setState({ error: true });
+    })
   }
 
   render() {
@@ -104,13 +133,14 @@ class App extends Component {
         {this.state.route === "home"
           ? <Home
             userName={this.state.user.name}
+            onTryItOutButton={this.onTryItOutButton}
             onInputChange={this.onInputChange}
             onSubmitButton={this.onSubmitButton}
-            box={this.state.box}
+            selectFace={this.selectFace}
+            faceData={this.state.faceData}
+            displayDemographics={this.state.displayDemographics}
+            activeFace={this.state.activeFace}
             imageUrl={this.state.imageUrl}
-            age={this.state.age}
-            gender={this.state.gender}
-            ethnicity={this.state.ethnicity}
             error={this.state.error} />
           :
           (this.state.route === "login" || this.state.route === "logout"

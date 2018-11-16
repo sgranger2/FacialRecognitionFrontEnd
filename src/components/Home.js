@@ -12,21 +12,29 @@ const Home = (props) => {
     let displayImage = null;
     let demographicInfo = null;
     if (props.imageUrl && errormsg === null) {
-        displayImage = <FaceRecognition box={props.box} imageUrl={props.imageUrl} />
-        demographicInfo = <Demographics age={props.age} gender={props.gender} ethnicity={props.ethnicity} />
+        displayImage = <FaceRecognition activeFace={props.activeFace} selectFace={props.selectFace} boxes={props.faceData} imageUrl={props.imageUrl} />
+        demographicInfo = <Demographics age={props.displayDemographics.age} gender={props.displayDemographics.gender} ethnicity={props.displayDemographics.ethnicity} />
     }
     
     return (
         <div>
             <h2>Hello, {props.userName}!</h2>
-            <h3>This application finds one human face in a photo and calculates the approximate age, sex, and race of that person.</h3>
-            <h3>Enter a link to any image below to try it out!</h3>
+            <h3>This application draws boxes around human faces in photos and tells you each person's approximate age, gender, and ethnicity</h3>
+            <input
+            type="submit"
+            value="Try It Out!"
+            style={{width: '130px'}}
+            className="searchImage b ph3 pv2 input-reset ba b--black black bg-transparent grow pointer f6 dib br2" 
+            onClick={props.onTryItOutButton}
+            />
+            <h3>OR</h3>
+            <h3 className="example-link">Enter your own image link below:</h3>
             <ImageLinkForm
                 onInputChange={props.onInputChange}
                 onSubmitButton={props.onSubmitButton}
             />
+            {demographicInfo} 
             {displayImage}
-            {demographicInfo}
             {errormsg}
         </div>
     );

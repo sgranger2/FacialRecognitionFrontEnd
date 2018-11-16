@@ -14,7 +14,7 @@ const ImageLinkForm = ({onInputChange, onSubmitButton}) => {
             <div>
                 <input
                     onClick={onSubmitButton}
-                    className="searchImage b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib br2"
+                    className="searchImage b  pv2 input-reset ba b--black bg-transparent grow pointer f6 dib br2"
                     type="submit"
                     value="Search Image"
                     style={{width: '130px'}}

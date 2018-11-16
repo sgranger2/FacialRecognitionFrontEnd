@@ -44,7 +44,7 @@ class Signup extends React.Component {
 
     render() {
         return (
-            <article className=' article center w-100 w-60-m w-30-l mv4 mw6 ba b--black-10 br3 shadow-5'>
+            <article className=' article center w-100 w-60-m w-30-l mw6 ba b--black-10 br3 shadow-5'>
                 <legend className='signup f1 fw7'>Sign Up</legend>
                 <div className="mt3">
                     <input

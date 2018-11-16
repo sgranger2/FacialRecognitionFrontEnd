@@ -22,6 +22,10 @@ h2 {
   margin-top: 0;
 }
 
+h3 {
+  margin-top: 0;
+}
+
 legend {
   margin-top: 40px;
   margin-bottom: 30px;
@@ -62,7 +66,8 @@ legend {
   -ms-flex-line-pack: start;
       align-content: flex-start;
   min-width: 200px;
-  /* margin-top: 500px; */
+  margin-top: 0px;
+  margin-bottom: 10px;
 }
 
 .dem-info {
@@ -82,6 +87,8 @@ legend {
   min-width: 220px;
   max-height: 200px;
   margin-top: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .lighter {
@@ -119,6 +126,11 @@ input:focus {
   font-weight: bold;
   border-color: black;
   color: black;
+}
+
+.example-link {
+  margin-bottom: 0;
+  font-size: .97rem;
 }
 
 .article {
@@ -232,12 +244,25 @@ input:focus {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin-bottom: 500px;
 }
 
 .face-recognition-box {
   position: absolute;
   box-shadow: 0 0 0 3px #149df2 inset;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  cursor: pointer;
+}
+
+.activeFace {
+  position: absolute;
+  box-shadow: 0 0 0 3px #f48991 inset;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

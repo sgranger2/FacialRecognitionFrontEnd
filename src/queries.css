@@ -16,4 +16,7 @@
         margin-right: 2px;
         display: none;
     }
+    .title {
+        font-size: 1.5rem;
+    }
 }

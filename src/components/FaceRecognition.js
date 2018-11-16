@@ -1,6 +1,8 @@
 import React from 'react';
+import Demographics from './Demographics';
 
 const FaceRecognition = (props) => {
+
     return (
         <div className='image-center ma'>
             <div className='absolute row'>
@@ -9,7 +11,11 @@ const FaceRecognition = (props) => {
                     src={props.imageUrl}
                     className='image shadow-1'
                     alt="Facial recognition" />
-                    <div className='face-recognition-box' style={{top: props.box.topRow, right: props.box.rightCol, bottom: props.box.bottomRow, left: props.box.leftCol}}></div>
+                    {
+                        props.boxes.map((box, index) => {
+                            return <div key={index} onClick={() => {props.selectFace(index)}} className={props.activeFace === index ? "activeFace" : "face-recognition-box"} style={{top: box.topRow, right: box.rightCol, bottom: box.bottomRow, left: box.leftCol}}></div>               
+                        })
+                    }
             </div>
         </div>
     );

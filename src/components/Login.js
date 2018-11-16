@@ -43,7 +43,7 @@ class Login extends React.Component {
     const { onRouteChange } = this.props;
 
     return (
-      <article className=' article center w-100 w-60-m w-30-l mv4 mw6 ba b--black-10 br3 shadow-5'>
+      <article className=' article center w-100 w-60-m w-30-l mw6 ba b--black-10 br3 shadow-5'>
         <legend className='login f1 fw7'>Log In</legend>
         <div>
           <input
