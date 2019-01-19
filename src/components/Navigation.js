@@ -13,13 +13,13 @@ const Navigation = ({ isSignedIn, onRouteChange }) => {
         return (
             <div style={{display: 'flex', justifyContent: 'flex-end'}}>
                 <nav style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <p onClick={() => onRouteChange('home')} className=' signin f3 black pointer pa2 ba br3'>Guest</p>
                     <p onClick={() => onRouteChange('login')} className=' signin f3 black pointer pa2 ba br3'>Log In</p>
                     <p onClick={() => onRouteChange('signup')} className=' register f3 black pointer pa2 ba br3'>Sign Up</p>
                 </nav>
             </div>
         );
     }
-
 }
 
 export default Navigation;
