@@ -20,7 +20,7 @@ const initialState = {
   isSignedIn: false,
   user: {
     id: '',
-    name: '',
+    name: 'guest',
     email: '',
     joined: ''
   }
