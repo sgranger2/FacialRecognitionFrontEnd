@@ -87,7 +87,7 @@ class App extends Component {
   }
 
   onSubmitButton = () => {
-    this.setState({ imageUrl: this.state.input, faceData: [], activeFace: 0 });
+    this.setState({ imageUrl: this.state.input, faceData: [], activeFace: 0, error: false });
     fetch('https://shanes-facial-recognition-app.herokuapp.com/imageurl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
@@ -106,14 +106,15 @@ class App extends Component {
 
   onTryItOutButton = () => {
     this.setState({ 
-      imageUrl: 'https://data.whicdn.com/images/314046099/large.jpg',
+      imageUrl: 'https://static0.srcdn.com/wordpress/wp-content/uploads/2019/02/Peaky-Blinders.jpg',
       faceData: [],
-      activeFace: 0 });
+      activeFace: 0,
+      error: false });
     fetch('https://shanes-facial-recognition-app.herokuapp.com/imageurl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-          input: 'https://data.whicdn.com/images/314046099/large.jpg'
+          input: 'https://static0.srcdn.com/wordpress/wp-content/uploads/2019/02/Peaky-Blinders.jpg'
         })
       }).then(response => response.json()).then(
       (response) => {
